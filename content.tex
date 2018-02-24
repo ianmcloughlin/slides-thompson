@@ -9,34 +9,34 @@
     \begin{adjustbox}{max width={0.8\textwidth}, center} 
       \begin{tikzpicture}[auto, on grid, node distance=24mm, initial text=, >=latex]
 
-          \node[state, initial]            (q_1)                      {}; 
-          \node[state]                     (q_2) [above right of=q_1] {};
-          \node[state]                     (q_3) [below right of=q_1] {};
+        \node[state, initial]            (q_1)                      {}; 
+        \node[state]                     (q_2) [above right of=q_1] {};
+        \node[state]                     (q_3) [below right of=q_1] {};
 
-          \node[state]                     (q_4) [      right of=q_2] {};
-          \node[state]                     (q_5) [      right of=q_4] {};
-          \node[state]                     (q_6) [      right of=q_5] {};
-          
-          \node[state, node distance=36mm] (q_7) [      right of=q_3] {};
-          \node[state, node distance=36mm] (q_8) [      right of=q_7] {};
+        \node[state]                     (q_4) [      right of=q_2] {};
+        \node[state]                     (q_5) [      right of=q_4] {};
+        \node[state]                     (q_6) [      right of=q_5] {};
+        
+        \node[state, node distance=36mm] (q_7) [      right of=q_3] {};
+        \node[state, node distance=36mm] (q_8) [      right of=q_7] {};
 
-          \node[state, accepting]          (q_9) [below right of=q_6] {}; 
+        \node[state, accepting]          (q_9) [below right of=q_6] {}; 
 
 
-          \path[->]
-            (q_1) edge [below right]       node {$\epsilon$} (q_2)
-                  edge []                  node {$\epsilon$} (q_3)
+        \path[->]
+          (q_1) edge [below right]       node {$\epsilon$} (q_2)
+                edge []                  node {$\epsilon$} (q_3)
 
-            (q_2) edge []                  node {$\epsilon$} (q_4)
-                  edge [bend right, below] node {$\epsilon$} (q_6)
-            (q_4) edge []                  node {$b$}        (q_5)
-            (q_5) edge []                  node {$\epsilon$} (q_6)
-                  edge [bend left, below]  node {$\epsilon$} (q_4)
-            (q_6) edge [below left]        node {$\epsilon$} (q_9)
+          (q_2) edge []                  node {$\epsilon$} (q_4)
+                edge [bend right, below] node {$\epsilon$} (q_6)
+          (q_4) edge []                  node {$b$}        (q_5)
+          (q_5) edge []                  node {$\epsilon$} (q_6)
+                edge [bend left, below]  node {$\epsilon$} (q_4)
+          (q_6) edge [below left]        node {$\epsilon$} (q_9)
 
-            (q_3) edge []                  node {$a$}        (q_7)
-            (q_7) edge []                  node {$b$}        (q_8)
-            (q_8) edge []                  node {$\epsilon$} (q_9);
+          (q_3) edge []                  node {$a$}        (q_7)
+          (q_7) edge []                  node {$b$}        (q_8)
+          (q_8) edge []                  node {$\epsilon$} (q_9);
 
       \end{tikzpicture}
     \end{adjustbox}
@@ -44,9 +44,159 @@
 \end{frame}
 
 
+\begin{frame}[fragile]{Fragments}
+  \begin{description}
+    \item[Assume] the regular expression is in postfix.
+    \item[Stack] of fragments of the overall NFA.
+    \item[Normal] characters push to the stack.
+    \item[Special] characters pop from and push to the stack.
+  \end{description}
+  \vspace{6mm}
+  \begin{alertblock}{Example fragment}
+    \vspace{2mm}
+    \begin{adjustbox}{max width={0.8\textwidth}, center} 
+      \begin{tikzpicture}[auto, on grid, node distance=24mm, initial text=, >=latex]
+
+        \node[state, initial, fill=gmitblue]  (q_1) [] {};
+        \node[state]                          (q_2) [right of=q_1] {};
+        \node[state]                          (q_3) [right of=q_2] {};
+        \node[state, accepting, fill=gmitred] (q_4) [right of=q_3] {};
 
 
-\begin{frame}[fragile]{Essential data}
+        \path[->]
+          (q_1) edge []                  node {$\epsilon$} (q_2)
+                edge [bend right, below] node {$\epsilon$} (q_4)
+          (q_2) edge []                  node {$b$}        (q_3)
+          (q_3) edge []                  node {$\epsilon$} (q_4)
+                edge [bend left, below]  node {$\epsilon$} (q_2);
+
+        \begin{scope}[on background layer]
+          \node[cloud, draw=black, fill=gmitgrey!20, cloud puffs=30, cloud puff arc=110, aspect=5, minimum width=68mm, minimum height=36mm] at (3.6,-0.3) {};
+        \end{scope}
+      \end{tikzpicture}
+    \end{adjustbox}
+  \end{alertblock}
+\end{frame}
+
+
+\begin{frame}[fragile]{Non-special characters}
+  For a normal, non-special character $x$ push the following fragment to the stack.
+  
+  \vspace{4mm}
+  
+  \begin{adjustbox}{max width={0.8\textwidth}, center} 
+    \begin{tikzpicture}[auto, on grid, node distance=24mm, initial text=, >=latex]
+      \node[state, initial, fill=gmitblue]  (q_1) [] {};
+      \node[state, accepting, fill=gmitred] (q_2) [right of=q_1] {};
+
+      \path[->] (q_1) edge [] node {$x$} (q_2);
+    \end{tikzpicture}
+  \end{adjustbox}
+
+  \vspace{4mm}
+
+  We should include the empty regular expression $\epsilon$ too.
+  
+  \vspace{10mm}
+
+  \begin{adjustbox}{max width={0.8\textwidth}, center} 
+    \begin{tikzpicture}[auto, on grid, node distance=24mm, initial text=, >=latex]
+      \node[state, initial, fill=gmitblue]  (q_1) [] {};
+      \node[state, accepting, fill=gmitred] (q_2) [right of=q_1] {};
+
+      \path[->] (q_1) edge [] node {$\epsilon$} (q_2);
+    \end{tikzpicture}
+  \end{adjustbox}
+\end{frame}
+
+
+\begin{frame}[fragile]{Concatenation $N.M$}
+  When you see a $.$, pop two fragments from the stack and push the following instead.
+  
+  \vspace{18mm}
+  
+  \begin{adjustbox}{max width={\textwidth}, center}
+    \begin{tikzpicture}[auto, on grid, node distance=24mm, initial text=, >=latex]
+      
+      \node[state, initial, fill=gmitblue]  (a_1)   [right of=s_i]   {};
+      \node[draw=none,fill=none]               (namea) [right of=a_1]   {Fragment 2};
+      \node[state, fill=gmitred!50!gmitblue]            (a_2)   [right of=namea] {};
+
+      \node[draw=none,fill=none]               (nameb) [right of=a_2]   {Fragment 1};
+      \node[state, fill=gmitred, accepting] (b_2)   [right of=nameb] {};
+
+      \begin{scope}[on background layer]
+        \node[cloud, draw=black, fill=gmitgrey!20, cloud puffs=30, cloud puff arc=110, aspect=5, minimum width=50mm, minimum height=20mm, right of=a_1];
+        \node[cloud, draw=black, fill=gmitgrey!20, cloud puffs=30, cloud puff arc=110, aspect=5, minimum width=50mm, minimum height=20mm, right of=a_2];
+      \end{scope}
+    \end{tikzpicture}
+  \end{adjustbox}
+\end{frame}
+
+
+\begin{frame}[fragile]{Union $N|M$}
+  When you see a $|$, pop two fragments from the stack and push the following instead.
+  
+  \vspace{4mm}
+  
+  \begin{adjustbox}{max width={0.8\textwidth}, center}
+    \begin{tikzpicture}[auto, on grid, node distance=24mm, initial text=, >=latex]
+      \node[state, initial, fill=gmitblue]   (s_i)   []                   {};
+      
+      \node[state, fill=gmitblue!50]         (a_1)   [above right of=s_i] {};
+      \node[draw=none,fill=none]             (namea) [right of=a_1]       {Fragment 1};
+      \node[state, fill=gmitred!50]          (a_2)   [right of=namea]     {};
+
+      \node[state, fill=gmitblue!50]         (b_1)   [below right of=s_i] {};
+      \node[draw=none,fill=none]             (nameb) [right of=b_1]       {Fragment 2};
+      \node[state, fill=gmitred!50]          (b_2)   [right of=nameb]     {};
+
+      \node[state, accepting, fill=gmitred]  (s_a)   [below right of=a_2] {};
+
+      \path[->] (s_i) edge [below right] node {$\epsilon$} (a_1)
+                      edge [above right] node {$\epsilon$} (b_1)
+                (a_2) edge [below left]  node {$\epsilon$} (s_a)
+                (b_2) edge []            node {$\epsilon$} (s_a);
+              
+
+      \begin{scope}[on background layer]
+        \node[cloud, draw=black, fill=gmitgrey!20, cloud puffs=30, cloud puff arc=110, aspect=5, minimum width=50mm, minimum height=20mm, right of=b_1];
+        \node[cloud, draw=black, fill=gmitgrey!20, cloud puffs=30, cloud puff arc=110, aspect=5, minimum width=50mm, minimum height=20mm, right of=a_1];
+      \end{scope}
+    \end{tikzpicture}
+  \end{adjustbox}
+\end{frame}
+
+\begin{frame}[fragile]{Kleene star $N^*$}
+  When you see a $^*$, pop a fragment from the stack and push the following instead.
+  
+  \vspace{10mm}
+  
+  \begin{adjustbox}{max width={0.8\textwidth}, center}
+    \begin{tikzpicture}[auto, on grid, node distance=24mm, initial text=, >=latex]
+      \node[state, initial, fill=gmitblue]  (s_i)   []               {};
+      
+      \node[state, fill=gmitblue!50]        (a_1)   [right of=s_i]   {};
+      \node[draw=none,fill=none]            (namea) [right of=a_1]   {Fragment};
+      \node[state, fill=gmitred!50]         (a_2)   [right of=namea] {};
+
+      \node[state, accepting, fill=gmitred]  (s_a)   [right of=a_2]  {};
+
+      \path[->] (s_i) edge []                     node {$\epsilon$} (a_1)
+                      edge [bend right=40, below] node {$\epsilon$} (s_a)
+                (a_2) edge []                     node {$\epsilon$} (s_a)
+                      edge [bend right=90, above] node {$\epsilon$} (a_1);
+              
+
+      \begin{scope}[on background layer]
+        \node[cloud, draw=black, fill=gmitgrey!20, cloud puffs=30, cloud puff arc=110, aspect=5, minimum width=50mm, minimum height=20mm, right of=a_1];
+      \end{scope}
+    \end{tikzpicture}
+  \end{adjustbox}
+\end{frame}
+
+
+\begin{frame}{Data structures}
   Recall the definition of an NFA.
   \begin{description}
     \item[$Q$] is a finite set of \emph{states},
@@ -56,12 +206,11 @@
     \item[$F$] is the set of \emph{accept states} ($\subseteq Q$). 
   \end{description}
 
-  \begin{alertblock}{Note}
-  You only need to know $\delta$, $q_0$ and $F$, and you can always stipulate that $|F| = 1$ by using $\epsilon$ arrows.
+  \begin{alertblock}{Notes}
+    \begin{itemize}
+      \item Only need to know $\delta$, $q_0$ and $F$, and $|F| = 1$.
+      \item Nothing points at $q_0$ and $q_f$ points at nothing.
+      \item From every state is a single symbol arrow or two $\epsilon$ arrows.
+    \end{itemize}
   \end{alertblock}
 \end{frame}
-
-
-
-
-
