@@ -1,0 +1,88 @@
+
+\begin{frame}{Non-determinism}
+  \begin{description}
+    \item[DFAs] always have exactly one state to transition to when in any given state and reading any given symbol.
+    \vspace{4mm}
+    \item[One arrow] emerging from each state for each symbol. (Sometimes we use one arrow for two symbols for tidiness.)
+    \vspace{4mm}
+    \item[Non-deterministic] finite automata can have any number of arrows for each state and symbol.
+    \vspace{4mm}
+    \item[Non-determinism] simplifies automata theory, and it can be shown that NFAs and DFAs recognise the same set of languages.
+  \end{description}
+\end{frame}
+
+
+\begin{frame}[fragile]{NFA example}
+  \begin{center}
+    \begin{tikzpicture}[auto, on grid, node distance=2cm, initial text=, >=latex]
+      \node[state, initial]   (q_1)                {$q_1$}; 
+      \node[state]            (q_2) [right of=q_1] {$q_2$};
+      \node[state]            (q_3) [right of=q_2] {$q_3$}; 
+      \node[state, accepting] (q_4) [right of=q_3] {$q_4$};
+      \path[->] 
+        (q_1) edge [loop above] node {$0,1$}        ()
+              edge []           node {$1$}          (q_2)
+        (q_2) edge []           node {$0,\epsilon$} (q_3)
+        (q_3) edge []           node {$1$}          (q_4)
+        (q_4) edge [loop above] node {$0,1$}        ();
+    \end{tikzpicture}
+  \end{center}
+  \begin{center}
+    Try running the following strings on the automaton. \\
+    $111101$, $00001010$, $1110$, $\epsilon$ \\
+    Describe in words the strings that the automaton recognises.
+  \end{center}
+  \citeeg{Sipser page 48}
+\end{frame}
+
+
+\begin{frame}[fragile]{NFA example}
+  \begin{center}
+    Construct an NFA with alphabet $\{0, 1\}$ to recognise the language {w| w ends with 00}. Try to do it with only three states.
+  \end{center}
+  \begin{center}
+    \begin{tikzpicture}[auto, on grid, node distance=2cm, initial text=]
+      \node[state, initial]   (s_0)                {$s_0$};
+      \node[state]            (s_1) [right of=s_0] {$s_1$};
+      \node[state, accepting] (s_2) [right of=s_1] {$s_2$};
+      \path[->]
+        (s_0) edge [loop below] node {0,1} (s_0)
+              edge []           node {0}   (s_1)
+        (s_1) edge []           node {0}   (s_2);
+    \end{tikzpicture}
+  \end{center}
+  \citeeg{Sipser Q 1.~7(a)}
+\end{frame}
+
+
+\begin{frame}[fragile]{Non-deterministic Finite Automaton (NFA) definition}
+  A DFA is a 5-tuple $(Q,\Sigma,\delta,q_0,F)$ where
+  \begin{description}
+    \item[$Q$] is a finite set of \emph{states},
+    \item[$\Sigma$] is a finite set called the \emph{alphabet},
+    \item[$\delta$] is the \emph{transition function} ($Q \times \Sigma_{\epsilon} \rightarrow \mathcal{P}(Q)$),
+    \item[$q_0$] is the \emph{start state} ($\in Q$), and
+    \item[$F$] is the set of \emph{accept states} ($\subseteq Q$). 
+  \end{description}
+  \vspace{5mm}
+  By $\Sigma_{\epsilon}$ we mean $\Sigma \cup \{ \epsilon \}$.
+  e.g. When $\Sigma = \{0,1\}$, $\Sigma_{\epsilon} = \{\epsilon,0,1\}.$
+  \citeeg{Sipser page 35}
+\end{frame}
+
+\begin{frame}[fragile]{Powerset example}
+
+  Take any set, say $A = \{0,1,2\}$.
+  Its powerset is the set of all its subsets, and is denoted $\mathcal{P}(A)$.
+
+
+  $$
+  \mathcal{P}(A) = \Big\{ \ 
+                      \{ \} \  , \  \{ 0 \} \  , \  \{ 1 \} \  ,\   \{ 2 \} \  , \ 
+                      \{ 0,1 \} \  , \  \{ 0,2 \} \  , \  \{ 1,2 \} \  , \ 
+                      \{ 0,1,2 \} \ 
+                    \Big\}
+  $$
+
+
+\end{frame}
