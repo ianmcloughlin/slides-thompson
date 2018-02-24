@@ -118,16 +118,16 @@
   \begin{adjustbox}{max width={\textwidth}, center}
     \begin{tikzpicture}[auto, on grid, node distance=24mm, initial text=, >=latex]
       
-      \node[state, initial, fill=gmitblue]  (a_1)   [right of=s_i]   {};
-      \node[draw=none,fill=none]               (namea) [right of=a_1]   {Fragment 2};
-      \node[state, fill=gmitred!50!gmitblue]            (a_2)   [right of=namea] {};
+      \node[state, initial, fill=gmitblue]   (a_1)   []               {};
+      \node[draw=none,fill=none]             (namea) [right of=a_1]   {Fragment 2};
+      \node[state, fill=gmitred!50!gmitblue] (a_2)   [right of=namea] {};
 
-      \node[draw=none,fill=none]               (nameb) [right of=a_2]   {Fragment 1};
-      \node[state, fill=gmitred, accepting] (b_2)   [right of=nameb] {};
+      \node[draw=none,fill=none]             (nameb) [right of=a_2]   {Fragment 1};
+      \node[state, fill=gmitred, accepting]  (b_2)   [right of=nameb] {};
 
       \begin{scope}[on background layer]
-        \node[cloud, draw=black, fill=gmitgrey!20, cloud puffs=30, cloud puff arc=110, aspect=5, minimum width=50mm, minimum height=20mm, right of=a_1];
-        \node[cloud, draw=black, fill=gmitgrey!20, cloud puffs=30, cloud puff arc=110, aspect=5, minimum width=50mm, minimum height=20mm, right of=a_2];
+        \node[cloud, draw=black, fill=gmitgrey!20, cloud puffs=30, cloud puff arc=110, aspect=5, minimum width=50mm, minimum height=20mm, right of=a_1] {};
+        \node[cloud, draw=black, fill=gmitgrey!20, cloud puffs=30, cloud puff arc=110, aspect=5, minimum width=50mm, minimum height=20mm, right of=a_2] {};
       \end{scope}
     \end{tikzpicture}
   \end{adjustbox}
@@ -141,17 +141,17 @@
   
   \begin{adjustbox}{max width={0.8\textwidth}, center}
     \begin{tikzpicture}[auto, on grid, node distance=24mm, initial text=, >=latex]
-      \node[state, initial, fill=gmitblue]   (s_i)   []                   {};
+      \node[state, initial, fill=gmitblue]  (s_i)   []                   {};
       
-      \node[state, fill=gmitblue!50]         (a_1)   [above right of=s_i] {};
-      \node[draw=none,fill=none]             (namea) [right of=a_1]       {Fragment 1};
-      \node[state, fill=gmitred!50]          (a_2)   [right of=namea]     {};
+      \node[state, fill=gmitblue!50]        (a_1)   [above right of=s_i] {};
+      \node[draw=none,fill=none]            (namea) [right of=a_1]       {Fragment 1};
+      \node[state, fill=gmitred!50]         (a_2)   [right of=namea]     {};
 
-      \node[state, fill=gmitblue!50]         (b_1)   [below right of=s_i] {};
-      \node[draw=none,fill=none]             (nameb) [right of=b_1]       {Fragment 2};
-      \node[state, fill=gmitred!50]          (b_2)   [right of=nameb]     {};
+      \node[state, fill=gmitblue!50]        (b_1)   [below right of=s_i] {};
+      \node[draw=none,fill=none]            (nameb) [right of=b_1]       {Fragment 2};
+      \node[state, fill=gmitred!50]         (b_2)   [right of=nameb]     {};
 
-      \node[state, accepting, fill=gmitred]  (s_a)   [below right of=a_2] {};
+      \node[state, accepting, fill=gmitred] (s_a)   [below right of=a_2] {};
 
       \path[->] (s_i) edge [below right] node {$\epsilon$} (a_1)
                       edge [above right] node {$\epsilon$} (b_1)
@@ -160,8 +160,8 @@
               
 
       \begin{scope}[on background layer]
-        \node[cloud, draw=black, fill=gmitgrey!20, cloud puffs=30, cloud puff arc=110, aspect=5, minimum width=50mm, minimum height=20mm, right of=b_1];
-        \node[cloud, draw=black, fill=gmitgrey!20, cloud puffs=30, cloud puff arc=110, aspect=5, minimum width=50mm, minimum height=20mm, right of=a_1];
+        \node[cloud, draw=black, fill=gmitgrey!20, cloud puffs=30, cloud puff arc=110, aspect=5, minimum width=50mm, minimum height=20mm, right of=b_1] {};
+        \node[cloud, draw=black, fill=gmitgrey!20, cloud puffs=30, cloud puff arc=110, aspect=5, minimum width=50mm, minimum height=20mm, right of=a_1] {};
       \end{scope}
     \end{tikzpicture}
   \end{adjustbox}
@@ -180,7 +180,7 @@
       \node[draw=none,fill=none]            (namea) [right of=a_1]   {Fragment};
       \node[state, fill=gmitred!50]         (a_2)   [right of=namea] {};
 
-      \node[state, accepting, fill=gmitred]  (s_a)   [right of=a_2]  {};
+      \node[state, accepting, fill=gmitred] (s_a)   [right of=a_2]   {};
 
       \path[->] (s_i) edge []                     node {$\epsilon$} (a_1)
                       edge [bend right=40, below] node {$\epsilon$} (s_a)
@@ -189,7 +189,7 @@
               
 
       \begin{scope}[on background layer]
-        \node[cloud, draw=black, fill=gmitgrey!20, cloud puffs=30, cloud puff arc=110, aspect=5, minimum width=50mm, minimum height=20mm, right of=a_1];
+        \node[cloud, draw=black, fill=gmitgrey!20, cloud puffs=30, cloud puff arc=110, aspect=5, minimum width=50mm, minimum height=20mm, right of=a_1] {};
       \end{scope}
     \end{tikzpicture}
   \end{adjustbox}
